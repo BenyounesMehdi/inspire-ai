@@ -25,6 +25,7 @@ import { Button } from "../ui/button";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Logo from "../navbar/Logo";
 
 const data = {
   navMain: [
@@ -66,10 +67,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <Link href="/">
                   <ArrowLeft />
                 </Link>
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-muted">
-                  <GalleryVerticalEnd className="size-4" />
-                </div>
-                <span className="font-semibold">ContentGen</span>
+
+                <Logo />
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -80,10 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu>
             {data.navMain.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton
-                  asChild
-                  className="hover:text-primary focus-visible:text-primary"
-                >
+                <SidebarMenuButton asChild className="">
                   <Link href={item.url} className="font-medium">
                     <item.icon />
                     {item.title}
@@ -119,10 +115,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarRail />
-      <Button
-        className="m-5 bg-green-600 hover:bg-green-700 text-white"
-        asChild
-      >
+      <Button className="m-5 bg-primary hover:bg-primary text-muted" asChild>
         <LogoutLink>Log out</LogoutLink>
       </Button>
     </Sidebar>

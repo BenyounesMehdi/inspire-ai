@@ -9,7 +9,7 @@ export default function Layout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
+      <main className="w-full container mx-auto mt-2">
         <SidebarTrigger />
         {children}
       </main>
