@@ -1,4 +1,21 @@
-import { Shield, Sparkles, Zap } from "lucide-react";
+import { Template } from "@/types/Types";
+import {
+  Shield,
+  Sparkles,
+  Zap,
+  FileText,
+  Instagram,
+  Mail,
+  MessageSquare,
+  Search,
+  ShoppingBag,
+  Twitter,
+  Youtube,
+  FileCode,
+  PenTool,
+  Newspaper,
+  Presentation,
+} from "lucide-react";
 
 export const features = [
   {
@@ -47,4 +64,90 @@ export const questionsAndAnswers = [
     answer:
       "Our platform supports various content types including blog posts, social media content, product descriptions, email newsletters, and more. We're constantly adding new content types and templates.",
   },
+];
+
+export const templates: Template[] = [
+  {
+    title: "Blog Post",
+    description: "Generate engaging blog posts with SEO-optimized content",
+    icon: FileText,
+    category: "Content",
+  },
+  {
+    title: "Social Media Post",
+    description: "Create attention-grabbing posts for any platform",
+    icon: Instagram,
+    category: "Social",
+  },
+  {
+    title: "Tweet Thread",
+    description: "Generate viral Twitter/X threads that engage your audience",
+    icon: Twitter,
+    category: "Social",
+  },
+  {
+    title: "Email Newsletter",
+    description: "Craft compelling email newsletters that convert",
+    icon: Mail,
+    category: "Marketing",
+  },
+  {
+    title: "Product Description",
+    description: "Write persuasive product descriptions that sell",
+    icon: ShoppingBag,
+    category: "Marketing",
+  },
+  {
+    title: "Chat Response",
+    description: "Generate professional customer service responses",
+    icon: MessageSquare,
+    category: "Support",
+  },
+  {
+    title: "YouTube Script",
+    description: "Create engaging video scripts for YouTube content",
+    icon: Youtube,
+    category: "Content",
+  },
+  {
+    title: "Technical Doc",
+    description: "Generate clear and concise technical documentation",
+    icon: FileCode,
+    category: "Technical",
+  },
+  {
+    title: "Ad Copy",
+    description: "Write compelling ad copy that drives conversions",
+    icon: PenTool,
+    category: "Marketing",
+  },
+  {
+    title: "Press Release",
+    description: "Create professional press releases for your announcements",
+    icon: Newspaper,
+    category: "PR",
+  },
+  {
+    title: "Sales Pitch",
+    description: "Generate persuasive sales pitches and presentations",
+    icon: Presentation,
+    category: "Sales",
+  },
+  {
+    title: "Support FAQ",
+    description: "Create comprehensive FAQ answers for customer support",
+    icon: MessageSquare,
+    category: "Support",
+  },
+];
+
+export const categories = [
+  "All",
+  "Content",
+  "Social",
+  "Marketing",
+  "Support",
+  "Technical",
+  "PR",
+  "Sales",
 ];
