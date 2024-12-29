@@ -9,3 +9,9 @@ export type Template = {
   >;
   category: string;
 };
+
+export type State = {
+  status: "error" | "success" | undefined;
+  message?: string | null;
+  content?: string;
+};
