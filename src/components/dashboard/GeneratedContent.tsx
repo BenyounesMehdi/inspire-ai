@@ -5,28 +5,29 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Textarea } from "../ui/textarea";
+import { Button } from "../ui/button";
+import { Copy } from "lucide-react";
+import TiptapEditor from "../editor/TiptapEditor";
 
 type GeneratedContentProps = {
   content: string;
 };
-
 export default function GeneratedContent({ content }: GeneratedContentProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Generated Content</CardTitle>
+        <CardTitle className="flex justify-between">
+          Generated Content
+          <Button>
+            <Copy /> Copy
+          </Button>
+        </CardTitle>
         <CardDescription>
           Your generated content will appear here
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Textarea
-          placeholder="Generated content will appear here..."
-          className="min-h-[400px]"
-          readOnly
-          value={content}
-        />
+        <TiptapEditor content={content} />
       </CardContent>
     </Card>
   );
