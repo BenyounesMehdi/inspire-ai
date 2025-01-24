@@ -8,6 +8,7 @@ import {
 import { Button } from "../ui/button";
 import { Copy } from "lucide-react";
 import ContentEditor from "../editor/ContentEditor";
+import { toast } from "sonner";
 
 type GeneratedContentProps = {
   content: string;
@@ -18,12 +19,17 @@ export default function GeneratedContent({ content }: GeneratedContentProps) {
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
           <p className="text-xl">Generated Content</p>
-          <Button>
+          <Button
+            onClick={() => {
+              navigator.clipboard.writeText(content);
+              toast.success("Copied to clipboard");
+            }}
+          >
             <Copy /> Copy
           </Button>
         </CardTitle>
       </CardHeader>
-      <CardContent className="h-80 overflow-y-scroll">
+      <CardContent className="h-96 overflow-y-scroll">
         {content && <ContentEditor content={content} />}
       </CardContent>
     </Card>
