@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
 import { Copy } from "lucide-react";
-import TiptapEditor from "../editor/TiptapEditor";
+import ContentEditor from "../editor/ContentEditor";
 
 type GeneratedContentProps = {
   content: string;
@@ -16,18 +16,15 @@ export default function GeneratedContent({ content }: GeneratedContentProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex justify-between">
-          Generated Content
+        <CardTitle className="flex justify-between items-center">
+          <p className="text-xl">Generated Content</p>
           <Button>
             <Copy /> Copy
           </Button>
         </CardTitle>
-        <CardDescription>
-          Your generated content will appear here
-        </CardDescription>
       </CardHeader>
-      <CardContent>
-        <TiptapEditor content={content} />
+      <CardContent className="h-80 overflow-y-scroll">
+        {content && <ContentEditor content={content} />}
       </CardContent>
     </Card>
   );
