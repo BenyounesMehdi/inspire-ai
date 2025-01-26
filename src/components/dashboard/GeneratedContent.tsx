@@ -26,7 +26,7 @@ export default function GeneratedContent({ content }: GeneratedContentProps) {
     <Card>
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
-          <p className="text-xl">Generated Content</p>
+          <p className="text-md md:text-xl">Generated Content</p>
           <div className="flex gap-2">
             <Button
               onClick={() => {

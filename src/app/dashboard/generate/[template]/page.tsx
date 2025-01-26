@@ -17,6 +17,7 @@ export default async function Page({
     <GenerateWrapper
       title={selectedTemplate.title}
       description={selectedTemplate.description}
+      prePrompt={selectedTemplate.prePrompt}
     />
   );
 }

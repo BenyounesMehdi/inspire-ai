@@ -7,11 +7,13 @@ import GenerateForm from "./GenerateForm";
 type GenerateWrapperProps = {
   title: string;
   description: string;
+  prePrompt: string;
 };
 
 export default function GenerateWrapper({
   title,
   description,
+  prePrompt,
 }: GenerateWrapperProps) {
   const [content, setContent] = useState<string | undefined>();
   return (
@@ -20,6 +22,7 @@ export default function GenerateWrapper({
         <GenerateForm
           title={title}
           description={description}
+          prePrompt={prePrompt}
           setContent={setContent}
         />
         <GeneratedContent content={content as string} />
