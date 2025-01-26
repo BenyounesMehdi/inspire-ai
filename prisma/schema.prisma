@@ -15,4 +15,17 @@ model User {
   firstName String
   lastName String 
   profileImage String
+
+  content Content[]
+}
+
+model Content {
+  id String @id @default(cuid())  
+  userId String
+  template String
+  prompt String
+  output String 
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }
