@@ -8,6 +8,7 @@ export type Template = {
     Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
   >;
   category: string;
+  prePrompt: string;
 };
 
 export type State = {
