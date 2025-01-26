@@ -16,3 +16,11 @@ export type State = {
   message?: string | null;
   content?: string;
 };
+
+export type Content = {
+  id: string;
+  template: string;
+  prompt: string;
+  output: string;
+  createdAt: Date;
+};
