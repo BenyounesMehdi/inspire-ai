@@ -17,12 +17,14 @@ import { toast } from "sonner";
 type GenerateFormProps = {
   title: string;
   description: string;
+  prePrompt: string;
   setContent: Dispatch<SetStateAction<string | undefined>>;
 };
 
 export default function GenerateForm({
   title,
   description,
+  prePrompt,
   setContent,
 }: GenerateFormProps) {
   const initialState: State = {
@@ -42,6 +44,7 @@ export default function GenerateForm({
   }, [state]);
   return (
     <form action={formAction}>
+      <input type="hidden" name="prePrompt" value={prePrompt} />
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -57,7 +60,7 @@ export default function GenerateForm({
         <CardContent>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="additional">Enter your prompt here</Label>
+              <Label htmlFor="additional">Enter your topic here</Label>
               <Textarea
                 name="prompt"
                 id="additional"
