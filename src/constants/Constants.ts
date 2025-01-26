@@ -72,72 +72,89 @@ export const templates: Template[] = [
     description: "Generate engaging blog posts with SEO-optimized content",
     icon: FileText,
     category: "Content",
+    prePrompt:
+      "Write a professional and engaging blog post about the following topic: ",
   },
   {
     title: "Social Media Post",
     description: "Create attention-grabbing posts for any platform",
     icon: Instagram,
     category: "Social",
+    prePrompt:
+      "Write a catchy and engaging social media post for the following idea: ",
   },
   {
     title: "Tweet Thread",
     description: "Generate viral Twitter/X threads that engage your audience",
     icon: Twitter,
     category: "Social",
+    prePrompt: "Write a detailed and engaging Twitter thread on the topic: ",
   },
   {
     title: "Email Newsletter",
     description: "Craft compelling email newsletters that convert",
     icon: Mail,
     category: "Marketing",
+    prePrompt:
+      "Compose an effective email newsletter about the following subject: ",
   },
   {
     title: "Product Description",
     description: "Write persuasive product descriptions that sell",
     icon: ShoppingBag,
     category: "Marketing",
+    prePrompt: "Write a persuasive product description for: ",
   },
   {
     title: "Chat Response",
     description: "Generate professional customer service responses",
     icon: MessageSquare,
     category: "Support",
+    prePrompt:
+      "Compose a professional and helpful customer service response to: ",
   },
   {
     title: "YouTube Script",
     description: "Create engaging video scripts for YouTube content",
     icon: Youtube,
     category: "Content",
+    prePrompt:
+      "Write an engaging script for a YouTube video on the following topic: ",
   },
   {
     title: "Technical Doc",
     description: "Generate clear and concise technical documentation",
     icon: FileCode,
     category: "Technical",
+    prePrompt: "Write detailed and clear technical documentation about: ",
   },
   {
     title: "Ad Copy",
     description: "Write compelling ad copy that drives conversions",
     icon: PenTool,
     category: "Marketing",
+    prePrompt: "Compose a high-converting ad copy for: ",
   },
   {
     title: "Press Release",
     description: "Create professional press releases for your announcements",
     icon: Newspaper,
     category: "PR",
+    prePrompt: "Write a professional press release about: ",
   },
   {
     title: "Sales Pitch",
     description: "Generate persuasive sales pitches and presentations",
     icon: Presentation,
     category: "Sales",
+    prePrompt: "Compose a persuasive sales pitch for: ",
   },
   {
     title: "Support FAQ",
     description: "Create comprehensive FAQ answers for customer support",
     icon: MessageSquare,
     category: "Support",
+    prePrompt: "Write a clear and helpful FAQ answer for: ",
   },
 ];
 
