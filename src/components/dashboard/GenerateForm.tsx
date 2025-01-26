@@ -45,6 +45,7 @@ export default function GenerateForm({
   return (
     <form action={formAction}>
       <input type="hidden" name="prePrompt" value={prePrompt} />
+      <input type="hidden" name="template" value={title} />
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
