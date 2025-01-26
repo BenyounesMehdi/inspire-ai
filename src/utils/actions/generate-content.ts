@@ -3,6 +3,7 @@
 import { State } from "@/types/Types";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { chatSession } from "../ai";
+import { prop } from "@mdxeditor/editor";
 
 export async function generateContent(prevState: unknown, formData: FormData) {
   const { getUser } = getKindeServerSession();
@@ -10,9 +11,11 @@ export async function generateContent(prevState: unknown, formData: FormData) {
 
   if (!user) return null;
 
-  const prompt = formData.get("prompt");
+  const userPrompt = formData.get("prompt");
+  const prePrompt = formData.get("prePrompt");
+  const prompt = prePrompt + "" + userPrompt;
 
-  if (!prompt) {
+  if (!userPrompt) {
     const state: State = {
       status: "error",
       message: "Please set your prompt",
