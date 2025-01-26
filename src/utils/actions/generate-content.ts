@@ -3,7 +3,7 @@
 import { State } from "@/types/Types";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { chatSession } from "../ai";
-import { prop } from "@mdxeditor/editor";
+import prisma from "@/lib/db";
 
 export async function generateContent(prevState: unknown, formData: FormData) {
   const { getUser } = getKindeServerSession();
@@ -14,6 +14,7 @@ export async function generateContent(prevState: unknown, formData: FormData) {
   const userPrompt = formData.get("prompt");
   const prePrompt = formData.get("prePrompt");
   const prompt = prePrompt + "" + userPrompt;
+  const template = formData.get("template");
 
   if (!userPrompt) {
     const state: State = {
@@ -30,6 +31,16 @@ export async function generateContent(prevState: unknown, formData: FormData) {
       message: "valid",
       content: res.response.text(),
     };
+
+    await prisma.content.create({
+      data: {
+        userId: user.id,
+        template: template as string,
+        prompt: prompt,
+        output: res.response.text(),
+      },
+    });
+
     return state;
   } catch {
     const state: State = {
