@@ -65,7 +65,7 @@ export default function PricingPage() {
                       : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
                   }`}
                 >
-                  Get Started
+                  {plan.popular ? "Get Started" : "Try for free"}
                 </Button>
               </CardFooter>
             </Card>
