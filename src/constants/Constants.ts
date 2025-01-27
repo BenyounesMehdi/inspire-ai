@@ -172,7 +172,7 @@ export const categories = [
 export const plans = [
   {
     name: "Basic",
-    price: "$9.99",
+    price: "$0",
     description: "Perfect for individuals and small projects",
     features: ["5 requests per day", "Basic templates", "Export to PDF"],
   },
