@@ -168,3 +168,23 @@ export const categories = [
   "PR",
   "Sales",
 ];
+
+export const plans = [
+  {
+    name: "Basic",
+    price: "$9.99",
+    description: "Perfect for individuals and small projects",
+    features: ["5 requests per day", "Basic templates", "Export to PDF"],
+  },
+  {
+    name: "Pro",
+    price: "$19.99",
+    description: "Ideal for professionals and growing businesses",
+    features: [
+      "10 requests per day",
+      "Advanced templates",
+      "Export to multiple formats",
+    ],
+    popular: true,
+  },
+];
