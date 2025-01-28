@@ -10,6 +10,9 @@ import {
 } from "@/components/ui/card";
 import { plans } from "@/constants/Constants";
 import Navbar from "@/components/navbar/Navbar";
+import Link from "next/link";
+import { createSubscription } from "@/utils/actions/create-subscription";
+import SubmitButton from "@/components/shared/SubmitButton";
 
 export default function PricingPage() {
   return (
@@ -58,15 +61,22 @@ export default function PricingPage() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button
-                  className={`w-full ${
-                    plan.popular
-                      ? ""
-                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                  }`}
-                >
-                  {plan.popular ? "Get Started" : "Try for free"}
-                </Button>
+                {plan.popular ? (
+                  <form className="w-full" action={createSubscription}>
+                    {/* <Button className="w-full bg-primary text-muted hover:bg-primary/80">
+                      Get Started
+                    </Button> */}
+                    <SubmitButton label="Get Started" />
+                  </form>
+                ) : (
+                  <Button
+                    variant={"ghost"}
+                    asChild
+                    className="w-full bg-secondary text-muted-foreground "
+                  >
+                    <Link href="/dashboard/generate">Try for free</Link>
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           ))}

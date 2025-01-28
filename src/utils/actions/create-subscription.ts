@@ -5,11 +5,11 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { stripe } from "../stripe/stripe";
 import { redirect } from "next/navigation";
 
-export const createSubscription = async () => {
+export const createSubscription = async (): Promise<void> => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  if (!user) return null;
+  if (!user) redirect("/");
 
   let stripeUserId = await prisma.user.findUnique({
     where: {
