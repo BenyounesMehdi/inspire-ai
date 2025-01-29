@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useRef } from "react";
-
 type GeneratedContentProps = {
   content: string;
 };
@@ -40,15 +39,31 @@ export default function GeneratedContent({ content }: GeneratedContentProps) {
           <p className="text-md md:text-xl">Generated Content</p>
           <div className="flex gap-2">
             <Button
+              disabled={!content}
               onClick={() => {
-                navigator.clipboard.writeText(content);
+                const plainText = content
+                  .replace(/!\[.*?\]\(.*?\)/g, "") // Remove images
+                  .replace(/\[([^\]]+)\]\((.*?)\)/g, "$1") // Remove links but keep the text
+                  .replace(/`([^`]+)`/g, "$1") // Remove inline code
+                  .replace(/#+\s(.+)/g, "$1") // Remove headers
+                  .replace(/\*\*(.*?)\*\*/g, "$1") // Remove bold formatting
+                  .replace(/\*(.*?)\*/g, "$1") // Remove italic formatting
+                  .replace(/~~(.*?)~~/g, "$1") // Remove strikethrough
+                  .replace(/>\s?(.*)/g, "$1") // Remove blockquotes
+                  .replace(/-\s(.*)/g, "$1") // Remove list dashes
+                  .replace(/\*\s(.*)/g, "$1") // Remove list asterisks
+                  .replace(/\d+\.\s(.*)/g, "$1") // Remove ordered list numbers
+                  .replace(/\n{2,}/g, "\n") // Reduce multiple newlines to a single newline
+                  .trim();
+
+                navigator.clipboard.writeText(plainText);
                 toast.success("Copied to clipboard");
               }}
             >
-              <Copy /> Copy
+              <Copy /> <span className="hidden sm:block">Copy</span>
             </Button>
-            <Button onClick={handleDownload}>
-              <Download /> Download
+            <Button onClick={handleDownload} disabled={!content}>
+              <Download /> <span className="hidden sm:block">Download</span>
             </Button>
           </div>
         </CardTitle>
