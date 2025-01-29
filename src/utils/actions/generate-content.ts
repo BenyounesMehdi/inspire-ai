@@ -29,7 +29,7 @@ export async function generateContent(prevState: unknown, formData: FormData) {
   ]);
 
   if (!subscriptionStatus || subscriptionStatus.status !== "active") {
-    if (content.length < 1) {
+    if (content.length < 5) {
       return createContent();
     } else {
       return redirect("/pricing");
