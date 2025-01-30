@@ -14,6 +14,9 @@ export const getUserHisotory = async () => {
       where: {
         userId: user.id,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
     return data;
   } catch {
