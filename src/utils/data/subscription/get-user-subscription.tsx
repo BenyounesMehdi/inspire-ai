@@ -13,8 +13,15 @@ export const getUserSubscription = async () => {
     where: {
       userId: user.id,
     },
+    select: {
+      status: true,
+      user: {
+        select: {
+          customerId: true,
+        },
+      },
+    },
   });
 
-  if (!subscription) return false;
-  return true;
+  return subscription;
 };
