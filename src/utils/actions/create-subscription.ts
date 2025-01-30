@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { stripe } from "../stripe/stripe";
 import { redirect } from "next/navigation";
+import { revalidateTag } from "next/cache";
 
 export const createSubscription = async (): Promise<void> => {
   const { getUser } = getKindeServerSession();
@@ -56,6 +57,5 @@ export const createSubscription = async (): Promise<void> => {
     success_url: "http://localhost:3000/payment/success",
     cancel_url: "http://localhost:3000/payment/cancelled",
   });
-
   return redirect(session.url as string);
 };
