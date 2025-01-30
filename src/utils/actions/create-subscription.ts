@@ -63,7 +63,7 @@ export const createSubscription = async (formData: FormData): Promise<void> => {
     });
     return redirect(session.url as string);
   } catch (error) {
-    console.error(error);
+    throw new Error("Error: ", error as Error);
     return redirect("/pricing");
   }
 };
