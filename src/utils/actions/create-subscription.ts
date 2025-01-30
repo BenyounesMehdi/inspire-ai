@@ -5,7 +5,7 @@ import { stripe } from "../stripe/stripe";
 import { redirect } from "next/navigation";
 
 export const createSubscription = async (formData: FormData): Promise<void> => {
-  const userId = formData.get("userId");
+  const userId = formData.get("userId") as string;
 
   if (!userId) {
     console.error("No user found!");
