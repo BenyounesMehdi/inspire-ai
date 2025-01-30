@@ -1,25 +1,26 @@
 "server only";
 
 import prisma from "@/lib/db";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { unstable_cache as nextCache } from "next/cache";
 
-export const getUserHisotory = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+export const getUserHistory = nextCache(
+  async (userId: string) => {
+    if (!userId) return null;
 
-  if (!user) return null;
-
-  try {
-    const data = await prisma.content.findMany({
-      where: {
-        userId: user.id,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-    return data;
-  } catch {
-    throw new Error("Failed to get the history.");
-  }
-};
+    try {
+      const data = await prisma.content.findMany({
+        where: {
+          userId: userId,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+      return data;
+    } catch {
+      throw new Error("Failed to get the history.");
+    }
+  },
+  ["user-history"],
+  { revalidate: 86400, tags: ["user-history"] }
+);
