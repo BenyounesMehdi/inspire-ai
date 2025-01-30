@@ -54,7 +54,7 @@ export default async function Page() {
         </CardHeader>
         <CardContent className="text-center space-y-4">
           <p className="text-muted-foreground">
-            You will be redirected to Stripe's secure customer portal to manage
+            You will be redirected to Stripe secure customer portal to manage
             your subscription.
           </p>
           <form action={createCustomPortal}>
