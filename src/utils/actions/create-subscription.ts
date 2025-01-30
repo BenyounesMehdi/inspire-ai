@@ -36,29 +36,34 @@ export const createSubscription = async (formData: FormData): Promise<void> => {
     });
   }
 
-  const session = await stripe.checkout.sessions.create({
-    customer: stripeUserId.customerId as string,
-    mode: "subscription",
-    billing_address_collection: "auto",
-    payment_method_types: ["card"],
-    customer_update: {
-      address: "auto",
-      name: "auto",
-    },
-    line_items: [
-      {
-        price: process.env.STRIPE_PRICE_ID,
-        quantity: 1,
+  try {
+    const session = await stripe.checkout.sessions.create({
+      customer: stripeUserId.customerId as string,
+      mode: "subscription",
+      billing_address_collection: "auto",
+      payment_method_types: ["card"],
+      customer_update: {
+        address: "auto",
+        name: "auto",
       },
-    ],
-    success_url:
-      process.env.NODE_ENV === "production"
-        ? "https://inspire-ai-tech.vercel.app/payment/success"
-        : "http://localhost:3000/payment/success",
-    cancel_url:
-      process.env.NODE_ENV === "production"
-        ? "https://inspire-ai-tech.vercel.app/payment/cancelled "
-        : "http://localhost:3000/payment/cancelled",
-  });
-  return redirect(session.url as string);
+      line_items: [
+        {
+          price: process.env.STRIPE_PRICE_ID,
+          quantity: 1,
+        },
+      ],
+      success_url:
+        process.env.NODE_ENV === "production"
+          ? "https://inspire-ai-tech.vercel.app/payment/success"
+          : "http://localhost:3000/payment/success",
+      cancel_url:
+        process.env.NODE_ENV === "production"
+          ? "https://inspire-ai-tech.vercel.app/payment/cancelled "
+          : "http://localhost:3000/payment/cancelled",
+    });
+    return redirect(session.url as string);
+  } catch (error) {
+    console.error(error);
+    return redirect("/pricing");
+  }
 };
