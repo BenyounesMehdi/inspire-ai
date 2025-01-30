@@ -1,3 +1,5 @@
+"use client";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Card,
@@ -17,6 +19,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ForwardRefEditor } from "../editor/ForwardRefEditor";
+import { toast } from "sonner";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import { useRef } from "react";
+import { Copy, Download } from "lucide-react";
+import { downloadContent } from "@/utils/helpers/download-content";
+import { copyContent } from "@/utils/helpers/copy-content";
+import ContentEditor from "../editor/ContentEditor";
 
 type HistoryProps = {
   content: {
@@ -29,6 +39,8 @@ type HistoryProps = {
 };
 
 export default function HistoryCard({ content }: HistoryProps) {
+  const contentRef = useRef<HTMLDivElement>(null);
+
   return (
     <Card className="border-secondary-foreground/20">
       <CardHeader>
@@ -51,11 +63,30 @@ export default function HistoryCard({ content }: HistoryProps) {
               View Full Output
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[80vh] ">
+          <DialogContent className="max-w-2xl max-h-[100vh] ">
             <DialogHeader>
               <DialogTitle className="bg-primary py-2 px-3 rounded-full text-muted w-fit">
                 {content.template}
               </DialogTitle>
+              <div className="flex space-x-2">
+                <Button
+                  onClick={() => {
+                    copyContent(content.output);
+                    toast.success("Copied to clipboard");
+                  }}
+                >
+                  <Copy /> <span className="hidden sm:block">Copy</span>
+                </Button>
+                <Button
+                  onClick={() =>
+                    downloadContent(
+                      contentRef as React.RefObject<HTMLDivElement>
+                    )
+                  }
+                >
+                  <Download /> <span className="hidden sm:block">Download</span>
+                </Button>
+              </div>
               <DialogDescription>
                 Generated on {new Date(content.createdAt).toLocaleDateString()}
               </DialogDescription>
@@ -71,11 +102,9 @@ export default function HistoryCard({ content }: HistoryProps) {
                 <div>
                   <h3 className="font-semibold mb-2">Generated content</h3>
 
-                  <ForwardRefEditor
-                    key={content.output}
-                    markdown={content.output}
-                    className="p-2 w-full markdown-content"
-                  />
+                  <div ref={contentRef}>
+                    {content && <ContentEditor content={content.output} />}
+                  </div>
                 </div>
               </div>
             </ScrollArea>
