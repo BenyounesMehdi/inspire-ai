@@ -1,7 +1,6 @@
 "use server";
 
 import prisma from "@/lib/db";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { stripe } from "../stripe/stripe";
 import { redirect } from "next/navigation";
 
