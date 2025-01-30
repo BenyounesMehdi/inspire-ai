@@ -29,7 +29,10 @@ export async function GET() {
     });
   }
 
-  const redirectUrl = "http://localhost:3000";
+  const redirectUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://inspire-ai-tech.vercel.app"
+      : "http://localhost:3000";
 
   return NextResponse.redirect(redirectUrl);
 }

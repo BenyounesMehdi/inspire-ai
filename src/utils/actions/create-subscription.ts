@@ -53,8 +53,14 @@ export const createSubscription = async (): Promise<void> => {
         quantity: 1,
       },
     ],
-    success_url: "http://localhost:3000/payment/success",
-    cancel_url: "http://localhost:3000/payment/cancelled",
+    success_url:
+      process.env.NODE_ENV === "production"
+        ? "https://inspire-ai-tech.vercel.app/payment/success"
+        : "http://localhost:3000/payment/success",
+    cancel_url:
+      process.env.NODE_ENV === "production"
+        ? "https://inspire-ai-tech.vercel.app/payment/cancelled"
+        : "http://localhost:3000/payment/cancelled",
   });
   return redirect(session.url as string);
 };

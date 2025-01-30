@@ -15,7 +15,10 @@ export const createCustomPortal = async (): Promise<void> => {
 
   const session = await stripe.billingPortal.sessions.create({
     customer: userSubscription?.user?.customerId as string,
-    return_url: "http://localhost:3000/dashboard/subscription",
+    return_url:
+      process.env.NODE_ENV === "production"
+        ? "https://inspire-ai-tech.vercel.app/dashboard/subscription"
+        : "http://localhost:3000/dashboard/subscription",
   });
 
   return redirect(session.url);
