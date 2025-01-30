@@ -13,8 +13,10 @@ import Navbar from "@/components/navbar/Navbar";
 import Link from "next/link";
 import { createSubscription } from "@/utils/actions/create-subscription";
 import SubmitButton from "@/components/shared/SubmitButton";
+import { getUserSubscription } from "@/utils/data/subscription/get-user-subscription";
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const SubscribedUser = await getUserSubscription();
   return (
     <>
       <Navbar />
@@ -62,12 +64,15 @@ export default function PricingPage() {
               </CardContent>
               <CardFooter>
                 {plan.popular ? (
-                  <form className="w-full" action={createSubscription}>
-                    {/* <Button className="w-full bg-primary text-muted hover:bg-primary/80">
-                      Get Started
-                    </Button> */}
-                    <SubmitButton label="Get Started" />
-                  </form>
+                  SubscribedUser?.status === "active" ? (
+                    <Button asChild className="w-full   ">
+                      <Link href="/dashboard/generate">Go to Dashboard</Link>
+                    </Button>
+                  ) : (
+                    <form className="w-full" action={createSubscription}>
+                      <SubmitButton label="Get Started" />
+                    </form>
+                  )
                 ) : (
                   <Button
                     variant={"ghost"}
