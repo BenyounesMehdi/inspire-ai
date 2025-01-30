@@ -1,9 +1,10 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Logo from "./Logo";
 import NavLinks from "./NavLinks";
-import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { Button } from "../ui/button";
 import NavMobile from "./NavMobile";
+import UserAvatar from "./UserAvatar";
 
 export default async function Navbar() {
   const { getUser } = getKindeServerSession();
@@ -22,7 +23,7 @@ export default async function Navbar() {
         ) : (
           <div className="flex justify-center items-center gap-3">
             <Button className="p-5" asChild>
-              <LogoutLink>Log out</LogoutLink>
+              <UserAvatar />
             </Button>
             <NavMobile />
           </div>
