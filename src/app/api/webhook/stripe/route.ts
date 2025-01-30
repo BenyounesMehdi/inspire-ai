@@ -1,6 +1,5 @@
 import prisma from "@/lib/db";
 import { stripe } from "@/utils/stripe/stripe";
-import { stat } from "fs";
 import { headers } from "next/headers";
 import Stripe from "stripe";
 
@@ -65,6 +64,21 @@ export async function POST(req: Request) {
         currentPeriodStart: subscription.current_period_start,
         currentPeriodEnd: subscription.current_period_end,
         status: subscription.status,
+      },
+    });
+  }
+
+  if (event.type === "customer.subscription.deleted") {
+    const subscription = await stripe.subscriptions.retrieve(
+      session.subscription as string
+    );
+
+    await prisma.subscription.update({
+      where: {
+        stripeSubscriptionId: subscription.id,
+      },
+      data: {
+        status: "canceled",
       },
     });
   }
