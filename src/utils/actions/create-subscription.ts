@@ -7,7 +7,12 @@ import { redirect } from "next/navigation";
 export const createSubscription = async (formData: FormData): Promise<void> => {
   const userId = formData.get("userId");
 
-  if (!userId) redirect("/");
+  if (!userId) {
+    console.error("No user found!");
+    redirect("/");
+  }
+
+  console.log("User ID:", userId);
 
   let stripeUserId = await prisma.user.findUnique({
     where: {
@@ -19,6 +24,7 @@ export const createSubscription = async (formData: FormData): Promise<void> => {
       firstName: true,
     },
   });
+  console.log("Stripe user data from DB:", stripeUserId);
 
   if (!stripeUserId?.customerId) {
     const stripeCustomer = await stripe.customers.create({
@@ -63,6 +69,7 @@ export const createSubscription = async (formData: FormData): Promise<void> => {
     });
     return redirect(session.url as string);
   } catch (error) {
-    throw new Error("Error: ", error as Error);
+    console.error("Subscription creation error:", error);
+    throw error;
   }
 };
