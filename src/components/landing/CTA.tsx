@@ -16,7 +16,7 @@ export default function CTA() {
           </p>
           <div className="mt-4 flex flex-col gap-2 min-[400px]:flex-row">
             <Button size="lg" variant="secondary" asChild>
-              <Link href="/register">
+              <Link href="/dashboard/generate">
                 Get Started <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
