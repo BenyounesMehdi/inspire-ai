@@ -7,7 +7,6 @@ import {
   Instagram,
   Mail,
   MessageSquare,
-  Search,
   ShoppingBag,
   Twitter,
   Youtube,

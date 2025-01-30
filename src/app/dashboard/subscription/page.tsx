@@ -1,10 +1,4 @@
-import {
-  ArrowRight,
-  CreditCard,
-  ExternalLink,
-  Sparkles,
-  Wallet,
-} from "lucide-react";
+import { ArrowRight, Sparkles, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,

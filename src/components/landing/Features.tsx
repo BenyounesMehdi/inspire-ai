@@ -1,5 +1,4 @@
 import { features } from "@/constants/Constants";
-import { Shield, Sparkles, Zap } from "lucide-react";
 
 export default function Features() {
   return (
