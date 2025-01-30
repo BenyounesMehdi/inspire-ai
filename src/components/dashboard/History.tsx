@@ -1,13 +1,17 @@
-import { getUserHisotory } from "@/utils/data/history/get-user-history";
 import HistoryCard from "./HistoryCard";
 import { NoData } from "../shared/NoData";
 import { Content } from "@/types/Types";
+import { getUserHistory } from "@/utils/data/history/get-user-history";
 
-export default async function History() {
-  const data = await getUserHisotory();
+type HistoryProps = {
+  userId: string;
+};
+
+export default async function History({ userId }: HistoryProps) {
+  const data = await getUserHistory(userId);
   const history = data as Content[];
 
-  if (history.length === 0) {
+  if (!history || history.length === 0) {
     return <NoData variant="search" />;
   }
 
