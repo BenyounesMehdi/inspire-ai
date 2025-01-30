@@ -14,9 +14,11 @@ import Link from "next/link";
 import { createSubscription } from "@/utils/actions/create-subscription";
 import SubmitButton from "@/components/shared/SubmitButton";
 import { getUserSubscription } from "@/utils/data/subscription/get-user-subscription";
+import { getUser } from "@/utils/data/user/get-user";
 
 export default async function PricingPage() {
   const SubscribedUser = await getUserSubscription();
+  const user = await getUser();
   return (
     <>
       <Navbar />
@@ -70,6 +72,11 @@ export default async function PricingPage() {
                     </Button>
                   ) : (
                     <form className="w-full" action={createSubscription}>
+                      <input
+                        type="hidden"
+                        name="userId"
+                        value={user?.id as string}
+                      />
                       <SubmitButton label="Get Started" />
                     </form>
                   )
