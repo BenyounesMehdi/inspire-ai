@@ -180,11 +180,7 @@ export const plans = [
     name: "Pro",
     price: "$19.99",
     description: "Ideal for professionals and growing businesses",
-    features: [
-      "Unlimited requests",
-      "Advanced templates",
-      "Export to multiple formats",
-    ],
+    features: ["Unlimited requests", "Advanced templates", "Export to PDF"],
     popular: true,
   },
 ];
