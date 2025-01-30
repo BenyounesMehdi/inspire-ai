@@ -5,6 +5,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { chatSession } from "../ai";
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
+import { revalidateTag } from "next/cache";
 
 export async function generateContent(prevState: unknown, formData: FormData) {
   const { getUser } = getKindeServerSession();
@@ -68,6 +69,8 @@ export async function generateContent(prevState: unknown, formData: FormData) {
           output: res.response.text(),
         },
       });
+
+      revalidateTag("user-history");
 
       return state;
     } catch {
