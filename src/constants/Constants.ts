@@ -54,9 +54,9 @@ export const questionsAndAnswers = [
   },
   {
     id: 3,
-    question: "Can I edit the generated content?",
+    question: "Can I download the generated content?",
     answer:
-      "Once content is generated, you have full control to edit, modify, or enhance it according to your needs. Our platform includes a built-in editor with formatting tools.",
+      "Yes, you can download the generated content as a PDF or copy it directly to your clipboard for easy use.",
   },
   {
     id: 4,
