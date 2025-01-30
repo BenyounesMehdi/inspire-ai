@@ -3,20 +3,21 @@
 import prisma from "@/lib/db";
 import { stripe } from "../stripe/stripe";
 import { redirect } from "next/navigation";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
-export const createSubscription = async (formData: FormData): Promise<void> => {
-  const userId = formData.get("userId") as string;
-
-  if (!userId) {
+export const createSubscription = async (): Promise<void> => {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+  if (!user || !user.id) {
     console.error("No user found!");
     redirect("/");
   }
 
-  console.log("User ID:", userId);
+  console.log("User ID:", user.id);
 
   let stripeUserId = await prisma.user.findUnique({
     where: {
-      id: userId as string,
+      id: user.id as string,
     },
     select: {
       customerId: true,
@@ -34,7 +35,7 @@ export const createSubscription = async (formData: FormData): Promise<void> => {
 
     stripeUserId = await prisma.user.update({
       where: {
-        id: userId as string,
+        id: user.id as string,
       },
       data: {
         customerId: stripeCustomer.id,
