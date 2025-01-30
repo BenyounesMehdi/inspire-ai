@@ -59,7 +59,7 @@ export const createSubscription = async (): Promise<void> => {
         : "http://localhost:3000/payment/success",
     cancel_url:
       process.env.NODE_ENV === "production"
-        ? "https://inspire-ai-tech.vercel.app/payment/cancelled"
+        ? "https://inspire-ai-tech.vercel.app/payment/cancelled "
         : "http://localhost:3000/payment/cancelled",
   });
   return redirect(session.url as string);
