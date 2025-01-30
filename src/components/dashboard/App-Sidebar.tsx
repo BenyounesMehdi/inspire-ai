@@ -6,6 +6,7 @@ import {
   History,
   ArrowLeft,
   Sparkles,
+  Wallet,
 } from "lucide-react";
 
 import {
@@ -49,6 +50,11 @@ const data = {
           title: "Pricing",
           url: "/pricing",
           icon: CreditCard,
+        },
+        {
+          title: "Subscription",
+          url: "/dashboard/subscription",
+          icon: Wallet,
         },
       ],
     },
