@@ -73,7 +73,7 @@ export async function generateContent(prevState: unknown, formData: FormData) {
     } catch {
       const state: State = {
         status: "error",
-        message: "error",
+        message: "Unable to generate content, please try again",
       };
       return state;
     }
