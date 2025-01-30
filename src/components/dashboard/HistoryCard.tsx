@@ -18,10 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ForwardRefEditor } from "../editor/ForwardRefEditor";
 import { toast } from "sonner";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import { useRef } from "react";
 import { Copy, Download } from "lucide-react";
 import { downloadContent } from "@/utils/helpers/download-content";
