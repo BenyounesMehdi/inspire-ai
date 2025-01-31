@@ -25,6 +25,8 @@ export const createSubscription = async (): Promise<void> => {
       firstName: true,
     },
   });
+  console.log("database url: ", process.env.DATABASE_URL);
+  console.log("direct url: ", process.env.DATABASE_URL);
   console.log("Stripe user data from DB:", stripeUserId);
 
   if (!stripeUserId?.customerId) {

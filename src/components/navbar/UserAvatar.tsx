@@ -6,17 +6,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getUser } from "@/utils/data/user/get-user";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export default async function UserAvatar() {
+  const { getUser } = getKindeServerSession();
   const user = await getUser();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarImage src={user?.profileImage} alt="User avatar" />
+          <AvatarImage src={`${user?.picture}`} alt="User avatar" />
           <AvatarFallback>
-            {user?.firstName?.slice(0, 3).toUpperCase()}
+            {user?.given_name?.slice(0, 3).toUpperCase()}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
