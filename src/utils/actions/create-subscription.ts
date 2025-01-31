@@ -3,21 +3,21 @@
 import prisma from "@/lib/db";
 import { stripe } from "../stripe/stripe";
 import { redirect } from "next/navigation";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export const createSubscription = async (): Promise<void> => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-  if (!user || !user.id) {
+  const { userId } = await auth();
+  const response = await (await clerkClient()).users.getUser(userId as string);
+  if (!response || !response.id) {
     console.error("No user found!");
     redirect("/");
   }
 
-  console.log("User ID:", user.id);
+  console.log("User ID:", response.id);
 
   let stripeUserId = await prisma.user.findUnique({
     where: {
-      id: user.id as string,
+      id: response.id as string,
     },
     select: {
       customerId: true,
@@ -37,7 +37,7 @@ export const createSubscription = async (): Promise<void> => {
 
     stripeUserId = await prisma.user.update({
       where: {
-        id: user.id as string,
+        id: response.id as string,
       },
       data: {
         customerId: stripeCustomer.id,

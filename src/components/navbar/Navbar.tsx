@@ -1,14 +1,12 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Logo from "./Logo";
 import NavLinks from "./NavLinks";
-import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { Button } from "../ui/button";
 import NavMobile from "./NavMobile";
 import UserAvatar from "./UserAvatar";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default async function Navbar() {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
   return (
     <nav className="container mx-auto mt-5 flex justify-around items-center">
       <Logo />
@@ -16,18 +14,19 @@ export default async function Navbar() {
         <div className="hidden md:block">
           <NavLinks />
         </div>
-        {!user ? (
+        <SignedOut>
           <Button className="p-5" asChild>
-            <LoginLink>Sign in</LoginLink>
+            <Link href={"/sign-in"}>Sign in</Link>
           </Button>
-        ) : (
+        </SignedOut>
+        <SignedIn>
           <div className="flex justify-center items-center gap-3">
             <Button className="p-5" asChild>
               <UserAvatar />
             </Button>
             <NavMobile />
           </div>
-        )}
+        </SignedIn>
       </div>
     </nav>
   );

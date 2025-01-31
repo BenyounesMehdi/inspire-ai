@@ -1,15 +1,15 @@
 "use server";
 
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { stripe } from "../stripe/stripe";
 import { getUserSubscription } from "../data/subscription/get-user-subscription";
 import { redirect } from "next/navigation";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export const createCustomPortal = async (): Promise<void> => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const { userId } = await auth();
+  const response = await (await clerkClient()).users.getUser(userId as string);
 
-  if (!user) return redirect("/");
+  if (!response) return redirect("/");
 
   const userSubscription = await getUserSubscription();
 

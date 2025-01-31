@@ -23,10 +23,10 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { Button } from "../ui/button";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "../navbar/Logo";
+import { SignOutButton } from "@clerk/nextjs";
 
 const data = {
   navMain: [
@@ -122,7 +122,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarRail />
       <Button className="m-5 bg-primary hover:bg-primary text-muted" asChild>
-        <LogoutLink>Log out</LogoutLink>
+        <SignOutButton>Log out</SignOutButton>
       </Button>
     </Sidebar>
   );

@@ -1,22 +1,24 @@
 "use server";
 
 import { State } from "@/types/Types";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { chatSession } from "../ai";
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
 import { revalidateTag } from "next/cache";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export async function generateContent(prevState: unknown, formData: FormData) {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const { userId } = await auth();
+  const response = await (await clerkClient()).users.getUser(userId as string);
 
-  if (!user) return null;
+  console.log("response: ", response);
+
+  if (!response) return null;
 
   const [subscriptionStatus, content] = await Promise.all([
     prisma.subscription.findUnique({
       where: {
-        userId: user.id,
+        userId: response.id,
       },
       select: {
         status: true,
@@ -24,7 +26,7 @@ export async function generateContent(prevState: unknown, formData: FormData) {
     }),
     prisma.content.findMany({
       where: {
-        userId: user.id,
+        userId: response.id,
       },
     }),
   ]);
@@ -63,7 +65,7 @@ export async function generateContent(prevState: unknown, formData: FormData) {
 
       await prisma.content.create({
         data: {
-          userId: user.id,
+          userId: response.id,
           template: template as string,
           prompt: prompt,
           output: res.response.text(),

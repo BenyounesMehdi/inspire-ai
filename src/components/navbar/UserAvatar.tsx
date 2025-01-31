@@ -4,27 +4,33 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
+import { SignOutButton } from "@clerk/nextjs";
 
 export default async function UserAvatar() {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await currentUser();
+  let firstName, imageUrl;
+
+  if (user) {
+    firstName = user.firstName;
+    imageUrl = user.imageUrl;
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="cursor-pointer">
-          <AvatarImage src={`${user?.picture}`} alt="User avatar" />
-          <AvatarFallback>
-            {user?.given_name?.slice(0, 3).toUpperCase()}
+        <Avatar>
+          <AvatarImage src={imageUrl} />
+          <AvatarFallback className="font-semibold">
+            {firstName?.slice(0, 3).toUpperCase()}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuItem className="cusror-pointer">
           <span>
-            <LogoutLink>Log out</LogoutLink>
+            <SignOutButton>Log out</SignOutButton>
           </span>
         </DropdownMenuItem>
       </DropdownMenuContent>

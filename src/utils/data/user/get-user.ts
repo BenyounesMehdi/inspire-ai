@@ -1,18 +1,18 @@
 "server only";
 
 import prisma from "@/lib/db";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export const getUser = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const { userId } = await auth();
+  const response = await (await clerkClient()).users.getUser(userId as string);
 
-  if (!user) return null;
+  if (!response) return null;
 
   try {
     const currentUser = await prisma.user.findUnique({
       where: {
-        id: user.id,
+        id: response.id,
       },
     });
     return currentUser;
