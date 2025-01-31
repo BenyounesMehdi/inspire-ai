@@ -34,7 +34,7 @@ export async function GET() {
 
     const redirectUrl =
       process.env.NODE_ENV === "production"
-        ? "https://houzy-project.vercel.app/"
+        ? "https://inspire-ai-tech.vercel.app/"
         : "http://localhost:3000";
 
     return NextResponse.redirect(redirectUrl);
