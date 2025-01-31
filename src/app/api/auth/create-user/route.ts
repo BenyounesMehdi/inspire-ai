@@ -2,24 +2,30 @@ import prisma from "@/lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
+  console.log("✅ [API] create-user route hit");
+
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
   if (!user || !user.id) {
-    throw new Error("Something went wrong");
+    console.error("❌ [ERROR] User not found");
+    return NextResponse.json({ error: "User not found" }, { status: 400 });
   }
 
-  try {
-    // Check if the user already exists
-    let dbUser = await prisma.user.findUnique({
-      where: { id: user.id },
-    });
+  console.log(`🔍 [INFO] Checking if user exists: ${user.id}`);
 
-    // If the user doesn't exist, create them
-    if (!dbUser) {
-      console.log("User not found, creating new user...");
-      dbUser = await prisma.user.create({
+  const dbUser = await prisma.user.findUnique({
+    where: { id: user.id },
+  });
+
+  if (!dbUser) {
+    try {
+      console.log("🆕 [INFO] Creating new user in database");
+
+      await prisma.user.create({
         data: {
           id: user.id,
           firstName: user.given_name ?? "",
@@ -27,22 +33,26 @@ export async function GET() {
           email: user.email ?? "",
           profileImage:
             user.picture ?? `https://avatar.vercel.sh/${user.given_name}`,
+          customerId: null, // Add this explicitly
         },
       });
+
+      console.log("✅ [SUCCESS] User created successfully");
+    } catch (error) {
+      console.error("❌ [DB ERROR] Failed to create user:", error);
+
+      return NextResponse.json({ status: 500 });
     }
-
-    // Redirect after successful user creation
-    const redirectUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://inspire-ai-tech.vercel.app"
-        : "http://localhost:3000";
-
-    return NextResponse.redirect(redirectUrl);
-  } catch (error) {
-    console.error("Error in create-user route:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+  } else {
+    console.log("ℹ️ [INFO] User already exists");
   }
+
+  const redirectUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://inspire-ai-tech.vercel.app"
+      : "http://localhost:3000";
+
+  console.log(`🔄 [INFO] Redirecting to: ${redirectUrl}`);
+
+  return NextResponse.redirect(redirectUrl);
 }
