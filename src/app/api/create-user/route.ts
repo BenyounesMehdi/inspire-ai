@@ -29,7 +29,7 @@ export async function GET() {
         },
       });
 
-      console.log(res);
+      console.log("response of user creation: ", res);
     }
 
     const redirectUrl =
