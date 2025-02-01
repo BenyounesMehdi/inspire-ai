@@ -1,15 +1,3 @@
-// import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
-
-// export default withAuth(async function middleware() {}, {
-//   isReturnToCurrentPage: true,
-// });
-
-// export const config = {
-//   matcher: [
-//     "/((?!api|_next/static|_next/image|auth|favicon.ico|robots.txt|images|login|pricing|$).*)",
-//   ],
-// };
-
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isPublicRoute = createRouteMatcher([
@@ -17,6 +5,7 @@ const isPublicRoute = createRouteMatcher([
   "/sign-up(.*)",
   "/",
   "/pricing",
+  "/api/webhook/stripe",
 ]);
 
 export default clerkMiddleware(async (auth, request) => {
