@@ -121,9 +121,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarRail />
-      <Button className="m-5 bg-primary hover:bg-primary text-muted" asChild>
-        <SignOutButton>Log out</SignOutButton>
-      </Button>
     </Sidebar>
   );
 }

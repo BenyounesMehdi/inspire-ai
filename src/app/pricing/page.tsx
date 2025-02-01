@@ -14,9 +14,22 @@ import Link from "next/link";
 import { createSubscription } from "@/utils/actions/create-subscription";
 import SubmitButton from "@/components/shared/SubmitButton";
 import { getUserSubscription } from "@/utils/data/subscription/get-user-subscription";
+import { auth } from "@clerk/nextjs/server";
+
+type Subscription = {
+  status: string;
+  user: {
+    customerId: string | null;
+  } | null;
+} | null;
 
 export default async function PricingPage() {
-  const SubscribedUser = await getUserSubscription();
+  const { userId } = await auth();
+  let SubscribedUser: Subscription;
+  if (userId) {
+    SubscribedUser = await getUserSubscription();
+  }
+
   return (
     <>
       <Navbar />
@@ -63,23 +76,29 @@ export default async function PricingPage() {
                 </ul>
               </CardContent>
               <CardFooter>
-                {plan.popular ? (
-                  SubscribedUser?.status === "active" ? (
-                    <Button asChild className="w-full   ">
-                      <Link href="/dashboard/generate">Go to Dashboard</Link>
-                    </Button>
+                {userId ? (
+                  plan.popular ? (
+                    SubscribedUser?.status === "active" ? (
+                      <Button asChild className="w-full">
+                        <Link href="/dashboard/generate">Go to Dashboard</Link>
+                      </Button>
+                    ) : (
+                      <form className="w-full" action={createSubscription}>
+                        <SubmitButton label="Get Started" />
+                      </form>
+                    )
                   ) : (
-                    <form className="w-full" action={createSubscription}>
-                      <SubmitButton label="Get Started" />
-                    </form>
+                    <Button
+                      variant={"ghost"}
+                      asChild
+                      className="w-full bg-secondary text-muted-foreground"
+                    >
+                      <Link href="/dashboard/generate">Try for free</Link>
+                    </Button>
                   )
                 ) : (
-                  <Button
-                    variant={"ghost"}
-                    asChild
-                    className="w-full bg-secondary text-muted-foreground "
-                  >
-                    <Link href="/dashboard/generate">Try for free</Link>
+                  <Button asChild className="w-full">
+                    <Link href="/sign-in">Sign In</Link>
                   </Button>
                 )}
               </CardFooter>
