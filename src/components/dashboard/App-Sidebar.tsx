@@ -22,11 +22,9 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { Button } from "../ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "../navbar/Logo";
-import { SignOutButton } from "@clerk/nextjs";
 
 const data = {
   navMain: [
