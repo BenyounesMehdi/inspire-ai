@@ -1,6 +1,6 @@
 "use server";
 
-import { State } from "@/types/Types";
+import { State, User } from "@/types/Types";
 import { chatSession } from "../ai";
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
@@ -8,7 +8,7 @@ import { revalidateTag } from "next/cache";
 import { getUser } from "../data/user/get-user";
 
 export async function generateContent(prevState: unknown, formData: FormData) {
-  const user = await getUser();
+  const user = (await getUser()) as User;
 
   console.log("response: ", user);
 
@@ -61,16 +61,14 @@ export async function generateContent(prevState: unknown, formData: FormData) {
         message: "valid",
         content: res.response.text(),
       };
-      if (user) {
-        await prisma.content.create({
-          data: {
-            userId: user.id,
-            template: template as string,
-            prompt: prompt,
-            output: res.response.text(),
-          },
-        });
-      }
+      await prisma.content.create({
+        data: {
+          userId: user.id,
+          template: template as string,
+          prompt: prompt,
+          output: res.response.text(),
+        },
+      });
 
       revalidateTag("user-history");
 
