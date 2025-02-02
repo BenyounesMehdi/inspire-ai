@@ -27,6 +27,7 @@ export async function GET() {
           profileImage:
             user.imageUrl ?? `https://avatar.vercel.sh/${user.firstName}`,
         },
+        select: { id: true },
       });
 
       console.log("response of user creation: ", res);

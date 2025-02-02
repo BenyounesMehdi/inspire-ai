@@ -5,20 +5,19 @@ import { chatSession } from "../ai";
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
 import { revalidateTag } from "next/cache";
-import { auth, clerkClient } from "@clerk/nextjs/server";
+import { getUser } from "../data/user/get-user";
 
 export async function generateContent(prevState: unknown, formData: FormData) {
-  const { userId } = await auth();
-  const response = await (await clerkClient()).users.getUser(userId as string);
+  const user = await getUser();
 
-  console.log("response: ", response);
+  console.log("response: ", user);
 
-  if (!response) return null;
+  if (!user) return null;
 
   const [subscriptionStatus, content] = await Promise.all([
     prisma.subscription.findUnique({
       where: {
-        userId: response.id,
+        userId: user.id,
       },
       select: {
         status: true,
@@ -26,7 +25,7 @@ export async function generateContent(prevState: unknown, formData: FormData) {
     }),
     prisma.content.findMany({
       where: {
-        userId: response.id,
+        userId: user.id,
       },
     }),
   ]);
@@ -62,15 +61,16 @@ export async function generateContent(prevState: unknown, formData: FormData) {
         message: "valid",
         content: res.response.text(),
       };
-
-      await prisma.content.create({
-        data: {
-          userId: response.id,
-          template: template as string,
-          prompt: prompt,
-          output: res.response.text(),
-        },
-      });
+      if (user) {
+        await prisma.content.create({
+          data: {
+            userId: user.id,
+            template: template as string,
+            prompt: prompt,
+            output: res.response.text(),
+          },
+        });
+      }
 
       revalidateTag("user-history");
 
